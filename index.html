@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+    <head>
     <title>Sine Wave</title>
     <link rel="stylesheet" href="style.css" type="text/css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+
+    
     <script type="text/javascript">
         function showAxes(ctx,axes) {
             var width = ctx.canvas.width;
@@ -210,18 +213,60 @@
 
             spirograph();
         }
-       
-    </script>
+    
+
+
+
+    var xValues = [100,200,300,400,500,600,700,800,900,1000];
+
+    new Chart("myChart", {
+    type: "line",
+    data: {
+        labels: xValues,
+    datasets: [{ 
+      data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+      borderColor: "red",
+      fill: false
+    }, { 
+        data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+        borderColor: "green",
+        fill: false
+    }, { 
+        data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+        borderColor: "blue",
+        fill: false
+    }]
+},
+options: {
+    legend: {display: false}
+}
+});
+</script>
+
+   
+
+
+
+
 </head>
 
 <body onload="init()">
+  
+    
+
     <h3>Oscillating Waves</h3>
     <p>move mouse around to speed up the waves!</p>
     <canvas id="canvas" width=auto height="200"></canvas>
     <p id="demo"></p>
     <h3>Multiple Sine Waves</h3>
     <p>move mouse to change frequency!</p>
-    <canvas id="canvas2" width=auto height="200">
+    <canvas id="canvas2" width=auto height="200"></canvas>
+
+    <h3>OTHER Waves</h3>
+    <p>a graph: should show 3 lines like this: <a href="https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_lines_multi" target="_blank">SOURCE</a></p>
+    
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+        
 </body>
 
 </html>
