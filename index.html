@@ -6,21 +6,37 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     </script>
+</head>
 
-    
+<body onload="init()">
+
+
+    <h3>OTHER Waves</h3>
+    <p>a graph: should show 3 lines like this: <a href="https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_lines_multi" target="_blank">SOURCE</a></p>
+
+    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    <h3>Oscillating Waves</h3>
+    <p>move mouse around to speed up the waves!</p>
+    <canvas id="canvas" width=auto height="200"></canvas>
+    <p id="demo"></p>
+    <h3>Multiple Sine Waves</h3>
+    <p>move mouse to change frequency!</p>
+    <canvas id="canvas2" width=auto height="200"></canvas>
+
+
     <script type="text/javascript">
         function showAxes(ctx,axes) {
             var width = ctx.canvas.width;
             var height = ctx.canvas.height;
             var xMin = 0;
-            
+
             ctx.beginPath();
             ctx.strokeStyle = "rgb(128,128,128)";
-        
+
             // X-Axis
             ctx.moveTo(xMin, height/2);
             ctx.lineTo(width, height/2);
-            
+
             // Y-Axis
             ctx.moveTo(width/2, 0);
             ctx.lineTo(width/2, height);
@@ -28,10 +44,10 @@
             // Starting line
             ctx.moveTo(0, 0);
             ctx.lineTo(0, height);
-            
+
             ctx.stroke();
         }
-        function drawPoint(ctx, y) {            
+        function drawPoint(ctx, y) {
             var radius = 3;
             ctx.beginPath();
 
@@ -46,18 +62,18 @@
         function plotWiggle(ctx, phase, frequency,nz, style) {
             var width = ctx.canvas.width;
             var height = ctx.canvas.height;
-            
+
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = style; 
-        
-            
+            ctx.strokeStyle = style;
+
+
             var x = 4;
             var y = 0;
             var y2 = 0;
             var amplitude = height/2;
-            
-           
+
+
             while (x < width) {
                 y =  amplitude/2 * Math.sin(phase+x/15);
                 y2 = amplitude/2 * Math.sin(phase*1.7+x/27);
@@ -73,21 +89,21 @@
                  }
             ctx.stroke();
             ctx.save();
-            
-            
-           
+
+
+
         }
 
 
         function plotSine(ctx, xOffset, frequency, style) {
             var width = ctx.canvas.width;
             var height = ctx.canvas.height;
-           
+
             ctx.beginPath();
             ctx.lineWidth = 2;
             ctx.strokeStyle = style; //"rgb(66,44,255)";
 
-                      
+
             var x = 4;
             var y = 0;
             var amplitude = height/2.1;
@@ -99,11 +115,11 @@
             ctx.stroke();
             ctx.save();
 
-            
+
             ctx.stroke();
             ctx.restore();
         }
-        
+
         var phase = 0.0;
         var min = -0.03;
         var max = 0.03;
@@ -118,18 +134,18 @@
             var h = canvas.height;
             context.clearRect(0, 0, w, h);
             showAxes(context);
-            context.save();            
-            
+            context.save();
+
             plotWiggle(context, phase, 30, noise, "rgb(170,170, 255)");
             plotWiggle(context, phase*3, 20, noise, "rgb(173,255,47)");
-            
+
             context.restore();
-            
+
             // decay
             noise--;
             if (noise<0) {noise=0;}
             phase += inc;
-           
+
             inc /= 1.02;
            if (inc<0.0001) { inc = 0.0; }
 
@@ -142,7 +158,7 @@
 
 
 
-        function spirograph() {            
+        function spirograph() {
             var canvas2 = document.getElementById("canvas2");
             var context = canvas2.getContext("2d");
 
@@ -154,7 +170,7 @@
             context.clearRect(0, 0, w, h);
             showAxes(context);
             context.save();
-           
+
             var step = canvas.height/5;
             for (var i = -4; i < canvas.height; i += step) {
                 plotSine(context, i, sinFrq, "rgb(255, 255, 0)");
@@ -199,21 +215,21 @@
         function init() {
             window.requestAnimationFrame(draw);
             window.addEventListener('resize', resizeCanvas, false);
-        
+
             document.getElementById("canvas")
             .addEventListener("mousemove", function(event) {
                         myFunctionC1(event);
                         });
-            
+
             document.getElementById("canvas2")
             .addEventListener("mousemove", function(event) {
                         myFunctionC2(event);
                         });
-            
+
 
             spirograph();
         }
-    
+
 
 
 
@@ -223,50 +239,25 @@
     type: "line",
     data: {
         labels: xValues,
-    datasets: [{ 
+    datasets: [{
       data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
       borderColor: "red",
       fill: false
-    }, { 
+    }, {
         data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
         borderColor: "green",
         fill: false
-    }, { 
+    }, {
         data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
         borderColor: "blue",
         fill: false
     }]
-},
-options: {
-    legend: {display: false}
-}
-});
-</script>
-
-   
-
-
-
-
-</head>
-
-<body onload="init()">
-  
-    
-    <h3>OTHER Waves</h3>
-    <p>a graph: should show 3 lines like this: <a href="https://www.w3schools.com/js/tryit.asp?filename=tryai_chartjs_lines_multi" target="_blank">SOURCE</a></p>
-    
-    <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
-    <h3>Oscillating Waves</h3>
-    <p>move mouse around to speed up the waves!</p>
-    <canvas id="canvas" width=auto height="200"></canvas>
-    <p id="demo"></p>
-    <h3>Multiple Sine Waves</h3>
-    <p>move mouse to change frequency!</p>
-    <canvas id="canvas2" width=auto height="200"></canvas>
-
-   
-        
+    },
+    options: {
+        legend: {display: false}
+    }
+    });
+    </script>
 </body>
 
 </html>
